@@ -9,7 +9,7 @@
  @keyframes s{to{transform:rotate(360deg)}}
 </style></head><body><div>
 <div class="spin" id="sp"></div>
-<h1 id="t">Sending to your TV...</h1>
+<h1 id="t">Finishing sign-in...</h1>
 <p id="m">Keep this page open for a moment.</p>
 </div>
 <script>
@@ -21,8 +21,10 @@
   function fail(t, m){ document.getElementById('sp').style.display='none'; document.getElementById('t').textContent=t; document.getElementById('m').textContent=m; }
   if (!ok) { fail('This link is not valid', 'Please start again from the sign-in screen on your TV.'); return; }
   location.replace('http://' + target + '/cb' + location.search);
+  var local = /^(localhost|127\.0\.0\.1):/.test(target);
   setTimeout(function(){
-    fail("Couldn't reach your TV", 'Make sure this phone is on the same Wi-Fi as the TV, then start again from the TV.');
-  }, 8000);
+    if (local) fail("Couldn't reach the app", 'Open APS File Manager and tap Try again.');
+    else fail("Couldn't reach your TV", 'Make sure this phone is on the same Wi-Fi as the TV, then start again from the TV.');
+  }, 20000);
 })();
 </script></body></html>
